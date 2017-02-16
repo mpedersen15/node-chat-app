@@ -17,7 +17,7 @@ io.on('connection', (socket) => {
 	socket.emit('newMessage', {
 		from: 'Matt',
 		text: 'Wanna come over and watch Star Wars?',
-		createdAt: new Date().toString()
+		createdAt: new Date().getTime()
 	});
 	
 	socket.on('disconnect', () => {
@@ -26,6 +26,11 @@ io.on('connection', (socket) => {
 	
 	socket.on('createMessage', (message) => {
 		console.log('message created: ', message);
+		io.emit('newMessage', {
+			from: message.from,
+			text: message.text,
+			createdAt: new Date().getTime()
+		})
 	});
 });
 
